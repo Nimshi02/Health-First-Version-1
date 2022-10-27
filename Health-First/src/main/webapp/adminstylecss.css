@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+div{
+	  background-color:#DFDFDF;
+  width: 900px;
+  border: 5px solid gray;
+  padding: 50px;
+  margin: 20px;
+	align: center;
+	position: absolute;
+	left: 300px;
+	top: 300px;
+	
+}
+header{
+    height: 50px;
+	padding-top: 10px;
+    background-color: gray;
+    text-align: right;
+}
+fa fa-user-circle{
+	background-color: white;
+}
+button {
+  background-color:  #2d2c66;
+  border: none;
+  color: white;
+  padding: 30px 64px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+a {
+   color: black;
+  text-decoration: none;
+}

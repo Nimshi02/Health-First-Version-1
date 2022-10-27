@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Doctor page</title>
+<link href="adminstylecss.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+</style>
+<script>
+if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};
+var token = sessionStorage.getItem('accessToken');
+function AddRecord() {
+	  location.href="AddMedicalRecords.html";
+	}
+function DelRecord() {
+	  location.href="DeleteMedicalRecord.html";
+	}
+function ViewRecords() {
+	  location.href="DoctorView.html";
+	}
+</script>
+</head>
+
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Doctor&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<div align="center"><button onclick="AddRecord()">Add Medical History</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="DelRecord()">Delete Medical History</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="ViewRecords()">View Patient Details</button></a><p/></div>
+</body>
+</html> 

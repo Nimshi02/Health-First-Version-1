@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<link href="DoctorViewStyles.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="DoctorViewStyles.css" rel="stylesheet">
+<title>View Patient</title>
+<style>
+
+
+</style>
+	<script>
+	if(sessionStorage.getItem('username')==null){
+		location.href="login.html"
+	};
+	var token = sessionStorage.getItem('accessToken');
+	var role=sessionStorage.getItem('role');
+	$(document).ready(function(){
+		  $("button").click(function(){
+			  var user=document.getElementById("usrid").value;
+			  
+		    $.ajax({ 
+		    	type: "GET",
+		    	 contentType: " charset=UTF-8 ",
+			        dataType: 'json',
+			        url: 'https://localhost:8243/ehealth/1.1.0/view/'+role+'/'+user,
+			        headers:{         
+			            'Authorization' : 'Bearer '+token        
+			        },
+		    	
+		    	success: function(result, status, xhr){
+		  			var jsonStr = JSON.stringify(result);
+		    		$("#div1").html(jsonStr);
+		    },
+			        error: function(error){
+			  	      $("#div1").html("Error occured while viewing the patient. Please try again later. ");
+			        }
+			});
+		  });
+		});
+		
+</script>
+</head>
+<body>
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Doctor&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<p>
+<div id="div1" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View User</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="UserID" name="usrid" id="usrid">
+  </div>
+
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>View Patient<strong></button>
+</div>
+</body>
+</html>

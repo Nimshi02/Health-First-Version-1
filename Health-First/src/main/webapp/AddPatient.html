@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add patient</title>
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script>
+	if(sessionStorage.getItem('username')==null){
+		location.href="login.html"
+	};
+	var token = sessionStorage.getItem('accessToken');
+	$(document).ready(function(){
+		  $("button").click(function(){
+			  var usern=document.getElementById("usrnm").value;
+				var email=document.getElementById("email").value;
+				var birth=document.getElementById("dob").value;
+			  var user={"name": usern , "email": email, "dateOfBirth": birth};
+		    $.ajax({ /* This will invoke the API and return the details*/
+		    	type: "POST",
+		    	 contentType: 'application/json;',
+			        dataType: 'json',
+			        url: 'https://localhost:8243/ehealth/admin/1.0.0/patient',
+			        headers:{         
+			            'Authorization' : 'Bearer '+token
+			            },
+			       
+			        data: JSON.stringify(user),
+		    	
+		    	success: function(result, status, xhr){
+		    		var print="<h1>Welcome to HealthFirst. Your ID is "+result["id"]+"</h1>"
+		    		$("#div1").html(print);
+		    },
+			        error: function(error){
+			  	      $("#div1").html("Error occured while adding a patient. Please try again");
+			        }
+			});
+		  });
+		});
+		
+</script>
+</head>
+<body>
+
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add User</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Username" name="usrnm" id="usrnm">
+  </div>
+
+  <div class="input-container">
+    <i class="fa fa-envelope icon"></i>
+    <input class="input-field" type="text" placeholder="Email" name="email"id="email">
+  </div>
+    <div class="input-container">
+    <i class="	fa fa-calendar icon"></i>
+    <input class="input-field" type="text" placeholder="DateOfBirth" name="dob" id="dob">
+  </div>
+  
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Add Patient<strong></button>
+</div>
+</body>
+</html>

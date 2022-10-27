@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js"></script>
+</head>
+<script>
+$(document).ready(function(){
+		  var token=sessionStorage.getItem('accessToken');
+		  var details = {
+				    'token': token
+				    }
+		  var formBody = [];
+		  for (var property in details) {
+		    var encodedKey = encodeURIComponent(property);
+		    var encodedValue = encodeURIComponent(details[property]);
+		    formBody.push(encodedKey + "=" + encodedValue);
+		  }
+		  formBody = formBody.join("&");
+	    $.ajax({ 
+	    	
+	    	type: "POST",
+	        url: 'https://localhost:8243/revoke',
+	        contentType: "application/x-www-form-urlencoded",
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('Authorization', 'Basic V3VjT0dRNnkxbVI0dXZPdzVTd2pCc2tvVUprYTpwN1dBRTRvYXh0ZmNTNGtYc2M3SWxzWHRmcDRh')
+	          },
+	          headers: {
+	        		
+		            'Content-Type': 'application/x-www-form-urlencoded'
+		          },
+	          data: formBody,
+	    	
+	    	success: function(result, status, xhr){
+	    		location.href="login.html";
+	    },
+		        error: function(error){
+		  	      $("#div1").html(error);
+		        }
+		});
+	  });
+	sessionStorage.removeItem('username');
+	location.href="login.html";
+</script>
+<body>
+<div id="div1"> </div>
+</body>
+</html>

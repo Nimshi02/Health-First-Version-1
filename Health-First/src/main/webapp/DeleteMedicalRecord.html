@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Delete Medical Record</title>
+<script>
+if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};
+var token = sessionStorage.getItem('accessToken');
+$(document).ready(function(){
+	  $("button").click(function(){
+		  var usern=document.getElementById("usrid").value;
+		  var recordID=document.getElementById("recordID").value;
+	    $.ajax({ 
+	    	type: "DELETE",
+	    	 contentType: 'application/json;',
+		        dataType: 'json',
+		        url: 'https://localhost:8243/ehealth/doctor/1.0.0/patient/'+usern +'/history/' +recordID ,
+		        headers:{         
+		            'Authorization' : 'Bearer '+token
+		        },
+		       
+	    	
+	    	success: function(result, status, xhr){
+	    		var print="<h1>Medical record has been deleted successfully</h1>"
+	    		$("#div1").html(print);
+	    },
+		        error: function(error){
+		  	      $("#div1").html("An error occured while deleting medical records. Please try again.");
+		        }
+		});
+	    alert("Medical Record has been deleted");
+	  });
+	});
+</script>
+</head>
+<body>
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Doctor&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<p>
+<div style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete Medical Record</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User ID" name="usrid" id="usrid">
+  </div>
+  <div class="input-container">
+    <i class="fas fa-file-medical icon"></i>
+    <input class="input-field" type="text" placeholder="Medical record ID" name="recordID" id="recordID">
+  </div>
+
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Delete Record<strong></button>
+</form>
+</body>
+</html>
