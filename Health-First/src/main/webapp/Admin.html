@@ -28,11 +28,24 @@ function DelP() {
 function ViewP() {
 	  location.href="viewPatient.html";
 	}
+function AddLabscientist() {
+	  location.href="AddLabScientist.html";
+	}
+function AddPharmacist() {
+	  location.href="AddPharmacist.html";
+	}
+function AddLabTest() {
+	  location.href="AddLabTest.html";
+	}
+function AddDoctor() {
+	  location.href="AddDoctor.html";
+	}
 </script>
 </head>
 
 <body style="text-align: center" >
 	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
-<div align="center"><button onclick="AddP()">Add patient</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="DelP()">Delete patient</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="ViewP()">View patient</button><p/></div>
+<div align="center"><button onclick="AddP()">Add patient</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="DelP()">Delete patient</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="ViewP()">View patient</button><p><button onclick="AddPharmacist()">Add Pharmacist</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="AddLabscientist()">Add LabScientist</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="AddLabTest()">Add New LabTest</button><p/>
+<p><button onclick="AddDoctor()">Add Doctor</button></p></div>
 </body>
 </html> 
