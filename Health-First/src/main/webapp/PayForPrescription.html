@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>View Patient</title>
+<style>
+table, th, td {
+
+  border: 1px solid black;
+  
+}
+table{
+align-self:center;
+width:100%
+}
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}.border {
+  border: none;
+  margin-top: 560px;
+}
+
+.mr-0 {
+  margin-right: auto;
+}
+.ml-auto {
+  margin-left:690px;
+}
+.d-block {
+  display:block;
+}
+.ml-up
+{
+	margin-top: auto;
+}
+</style>
+
+<script>
+	if (sessionStorage.getItem('username') == null) {
+		location.href = "login.html"
+	};
+	var token = sessionStorage.getItem('accessToken');
+	var role = sessionStorage.getItem('role');
+	$(document)
+			.ready(
+					function() {
+						$("button").click(function(){
+						var pid = document.getElementById("pid").value;
+
+						$
+								.ajax({
+									type : "GET",
+									url : 'https://localhost:8243/dataservice/1.0.0/ListPrescriptionForPatient?PID='
+											+ pid,
+									headers : {
+										'Authorization' : 'Bearer ' + token
+									},
+
+									success : function(result, status, xhr) {
+										List(result);
+
+									},
+									error : function(error) {
+										$("#div1")
+												.html(
+														"An error occured while retriving the data. Please enter the details again and try. ");
+									}
+								});
+						});
+					});
+	function List(xml) {
+	    var i;
+	    var table =
+	        `<table><tbody><tr><th>PatientNo</th>
+	            <th>Patient ID</th>
+	            <th>Note</th>
+	            <th>Total Price</th>
+	            <th>Date</th>
+	            <th>Description</th>
+	        </tr>`;
+	    var x = xml.getElementsByTagName("Entry");
+
+	    // Start to fetch the data by using TagName 
+	    for (i = 0; i < x.length; i++) {
+	        table += `<tr><td>` +
+	            x[i].getElementsByTagName("pNo")[0]
+	            .childNodes[0].nodeValue + `</td><td>` +
+	            x[i].getElementsByTagName("pid")[0]
+	            .childNodes[0].nodeValue + `</td><td>` +
+	            x[i].getElementsByTagName("note")[0]
+	            .childNodes[0].nodeValue + `</td><td>`+
+	            x[i].getElementsByTagName("totalprice")[0]
+	            .childNodes[0].nodeValue + `</td><td>`+
+	            x[i].getElementsByTagName("date")[0]
+	            .childNodes[0].nodeValue + `</td><td>`+
+	            x[i].getElementsByTagName("descripion")[0]
+	            .childNodes[0].nodeValue + `</td><tr>`;
+	            
+	    }
+	    table+= `</tbody></table><p><a href="MakePrescriptionPayment.html"><button class="btn" style="background-color: #2d2c66;">
+			<strong>view prescription<strong>
+		</button></a>`;
+	    document.getElementById("div1").innerHTML =table;
+	}
+</script>
+</head>
+<body>
+	<header style="text-align: right; color: #FFFFFF;">
+		<i class="fa fa-user-circle-o" style="font-size: 24px; color: white;"></i>&nbsp;Welcome,
+		Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;
+	</header>
+	<p>
+	<p>
+	<div id="div1" style="max-width: 500px; margin: auto">
+		<p>
+		<h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View
+			User</h1>
+		<div class="input-container">
+			<i class="fa fa-user icon"></i> <input class="input-field"
+				type="text" placeholder="Patient ID" name="pid" id="pid">
+		</div>
+		<button class="btn" style="background-color: #2d2c66;">
+			<strong>view prescription<strong>
+		</button>
+	</div>
+	
+</body>
+</html>

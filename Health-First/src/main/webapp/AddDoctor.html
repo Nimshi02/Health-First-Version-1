@@ -84,10 +84,11 @@ $(document).ready(function(){
 			var availability=document.getElementById("availability").value;
 			var location=document.getElementById("location").value;//This will get the location
 			var speciality=document.getElementById("speciality").value;
+			var dcharges=document.getElementById("dcharges").value;
 			var token = sessionStorage.getItem('accessToken');
 	    $.ajax({ /* This will get invoke the api and return the results */
 	    	type: "GET",
-		        url: 'https://localhost:8243/dataservice/1.0.0/AddDoctor?DID='+DID+'&Dname='+Dname+'&availability='+availability+'&location='+location+'&speciality='+speciality,
+		        url: 'https://localhost:8243/dataservice/1.0.0/AddDoctor?DID='+DID+'&Dname='+Dname+'&availability='+availability+'&location='+location+'&speciality='+speciality+'&dcharges='+dcharges,
 		        headers:{         
 		        	'accept' :'*/*',
 		            'Authorization' : 'Bearer '+token,
@@ -131,6 +132,10 @@ $(document).ready(function(){
 <div class="input-container">
     <i class="fa fa-user-md icon"></i>
     <input class="input-field" type="text" placeholder="Speciality" name="speciality" id="speciality">
+  </div>
+  <div class="input-container">
+    <i class="fa fa-user-md icon"></i>
+    <input class="input-field" type="text" placeholder="Charges" name="dcharges" id="dcharges">
   </div>
 </p>
 

@@ -72,7 +72,7 @@ $(document).ready(function(){
 			
 	    $.ajax({ /* This will get invoke the api and return the results */
 	    	type: "GET",
-		        url: 'https://localhost:8243/dataservice/1.0.0/AddLabScientist?labScid='+LabScId+'&labSCname='+name,
+		        url: 'https://localhost:8243/dataservice/1.0.0/GetLabReportType'
 		        headers:{         
 		        	'accept' :'*/*',
 		            'Authorization' : 'Bearer '+token,
@@ -104,7 +104,7 @@ $(document).ready(function(){
 
   <div class="input-container">
     <i class="fa fa-user-md icon"></i>
-    <input class="input-field" type="text" placeholder="Name" name="name" id="name">
+    <div id="div2"></div>
   </div>
   </p>
 
