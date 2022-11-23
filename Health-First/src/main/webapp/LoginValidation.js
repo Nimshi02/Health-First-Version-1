@@ -101,7 +101,10 @@
 	    				    				{
 	    				    				location.href = "Patient.html";
 	    				    				}
-		    				    				
+		    				    			if(role=="Pharmacist")	
+		    				    			{
+												location.href="Pharmacist.html";
+		}
 		    				    			}
 		    				    			}
 		    				    },

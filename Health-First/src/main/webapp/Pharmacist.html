@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Admin page</title>
+<link href="adminstylecss.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+</style>
+<script>
+if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};
+var url_string = window.location.href; 
+var token = sessionStorage.getItem('accessToken');
+function ListP() {
+	  location.href="ListPrescriptions.html";
+	}
+function Addnote() {
+	  location.href="AddPrescriptionNotes.html";
+	}
+function DeliverMedicine() {
+	  location.href="DeliverMedicine.html";
+	}
+
+</script>
+</head>
+
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<div align="center"><button onclick="ListP()">List Prescription</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="Addnote()">Add notes to prescription</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="DeliverMedicine()">Deliver Medicine</button><p/>
+</div>
+</body>
+</html> 
