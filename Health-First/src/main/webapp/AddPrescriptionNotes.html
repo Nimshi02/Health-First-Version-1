@@ -17,9 +17,10 @@
 		  $("button").click(function(){
 			  var pno=document.getElementById("pno").value;
 			  var note=document.getElementById("note").value;
+			  var price=document.getElementById("price").value;
 		    $.ajax({ 
 		    	type: "GET",
-			        url: 'https://localhost:8243/dataservice/1.0.0/AddNoteForPrescription?note='+note+'&pNo='+pno,
+			        url: 'https://localhost:8243/dataservice/1.0.0/AddNoteForPrescription?Note='+note+'&price='+price+'&pNo='+pno,
 			        headers:{         
 			            'Authorization' : 'Bearer '+token
 			        },
@@ -46,6 +47,10 @@
   <div class="input-container">
     <i class="fa fa-user icon"></i>
     <input class="input-field" type="text" placeholder="Prescription Number" name="pno" id="pno">
+  </div>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Prescription price" name="price" id="price">
   </div>
     <div class="input-container">
     <i class="fa fa-user icon"></i>

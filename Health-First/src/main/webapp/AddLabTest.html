@@ -4,127 +4,44 @@
 <meta charset="UTF-8">
 <script src="jquery.min.js"></script>
 <title>Add Pharmacist</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-<style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
-
-header{
-    height: 50px;
-	padding-top: 10px;
-    background-color: gray;
-    text-align: right;
-}
-.input-container {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.icon {
-  padding: 10px;
-  background: gray;
-  color: white;
-  min-width: 50px;
-  text-align: center;
-}
-
-.input-field {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-}
-
-.input-field:focus {
-  border: 2px solid dodgerblue;
-}
-
-/* Set a style for the submit button */
-.btn {
-  background-color: gray;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-.btn:hover {
-  opacity: 1;
-}
-a {
-  color: white;
-  text-decoration: none; /* no underline */
-}
-
-.options {
-  border: 1px solid #e5e5e5;
-  padding: 10px;
-}
-
-select {
-  font-size: 14px;
-  width: 100%;
-  height:36px;
-  background: white;
-}
-</style>
-<script>
-if(sessionStorage.getItem('username')==null){
-	location.href="login.html"
-};
-
-$(document).ready(function(){
-	  $("button").click(function(){
-		  var uniqueNo=document.getElementById("uNo").value;//This is to get the userid
-			var name=document.getElementById("labTname").value;//This will get the doctors ID which was entered by the user
-			var price=document.getElementById("price").value;//This will get the medicine code enterd by doctor
-			var token = sessionStorage.getItem('accessToken');
-	    $.ajax({ /* This will get invoke the api and return the results */
-	    	type: "GET",
-		        url: 'https://localhost:8243/dataservice/1.0.0/AddLabReport?reportUNo='+uniqueNo+'&reportName='+name+'&price='+price,
-		        headers:{         
-		        	'accept' :'*/*',
-		            'Authorization' : 'Bearer '+token,
-		            },
-		       
-	    	
-	    	success: function(result, status, xhr){
-	    		var print="<h1>New Lab report type is added successfully</h1>"
-	    		$("#div1").html(print);
-	    },
-		        error: function(error){
-		  	      $("#div1").html("Error occured while creating a medical record. Please try again.");
-		        }
-		});
-	  });
-	});
-</script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'
+	crossorigin='anonymous'></script>
+<link rel="stylesheet" href="AddDoctorFileStyle.css">
+<link rel="stylesheet" href="AddLabTest.js">
 <body>
 
-<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
-<p>
-<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
-<p>
-  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Medical Record</h1>
-  <div class="input-container">
-    <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" placeholder="Lab Test Unique No" name="uNo" id="uNo">
-  </div>
+	<header style="text-align: right; color: #FFFFFF;">
+		<i class="fa fa-user-circle-o" style="font-size: 24px; color: white;"></i>&nbsp;Welcome,
+		Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;
+	</header>
+	<p>
+	<div id="div1" action="/firstservelet/AddPatient.jsp"
+		style="max-width: 500px; margin: auto">
+		<p>
+		<h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add
+			Medical Record</h1>
+		<div class="input-container">
+			<i class="fa fa-user icon"></i> <input class="input-field"
+				type="text" placeholder="Lab Test Unique No" name="uNo" id="uNo">
+		</div>
 
-   <div class="input-container">
-    <i class="fa fa-stethoscope icon"></i>
-    <input class="input-field" type="text" placeholder="Lab test name" name="labTname" id="labTname">
-  </div><p>
-    <div class="input-container">
-    <i class="fa fa-credit-card icon"></i>
-    <input class="input-field" type="text" placeholder="Lab Test price" name="price" id="price">
-</div></p>
+		<div class="input-container">
+			<i class="fa fa-stethoscope icon"></i> <input class="input-field"
+				type="text" placeholder="Lab test name" name="labTname"
+				id="labTname">
+		</div>
+		<p>
+		<div class="input-container">
+			<i class="fa fa-credit-card icon"></i> <input class="input-field"
+				type="text" placeholder="Lab Test price" name="price" id="price">
+		</div>
+		</p>
 
-  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Add Pharmacist<strong></button>
-</div>
+		<button type="submit" class="btn" style="background-color: #2d2c66;">
+			<strong>Add Pharmacist<strong>
+		</button>
+	</div>
 </body>
 </html>

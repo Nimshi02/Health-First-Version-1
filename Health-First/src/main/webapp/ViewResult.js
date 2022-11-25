@@ -4,7 +4,6 @@ if(sessionStorage.getItem('username')==null){
 var token = sessionStorage.getItem('accessToken');
 $(document).ready(function(){
 	  $("button").click(function(){
-		alert("Hi");
 		  var pid=document.getElementById("pid").value;//This is to get the userid
 			
 	    $.ajax({ /* This will get invoke the api and return the results */
