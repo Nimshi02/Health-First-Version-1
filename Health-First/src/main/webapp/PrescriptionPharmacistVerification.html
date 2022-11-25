@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pharmacist Availability page</title>
+<script src="jquery.min.js"></script>
+<link href="adminstylecss.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="AddDoctorFileStyle.css" rel="stylesheet">
+<script>
+if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};
+var token = sessionStorage.getItem('accessToken');
+	$(document).ready(function(){
+			 
+
+			
+			 
+		    $.ajax({ 
+		    	type: "GET",
+			        url: 'https://localhost:8243/dataservice/1.0.0/ListPresciptionForAdmin',
+			        headers:{         
+			            'Authorization' : 'Bearer '+token,
+			            'accept' :'*/*',
+			            },
+		    	
+		    	success: function(result, status, xhr){  
+                    PharmacistDetails(result);
+
+		    	
+		    		
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while viewing the patinent details. Please try again.");
+			        }
+			});
+		  });
+	
+	function PharmacistDetails(xml) {
+        var i;
+        var table =
+            `<table><tbody><tr><th>Prescription No</th>
+                <th>DoctorID</th>
+                <th>Patient ID</th>
+                <th>Date</th>
+                <th> DSign</th>
+                <th>Decoded Dsign</th>
+                <th>Verification</th>
+            </tr>`;
+        var x = xml.getElementsByTagName("Entry");
+        var compare;
+var dsign_decode;
+var comparedresult;
+        // Start to fetch the data by using TagName 
+        for (i = 0; i < x.length; i++) {
+        	dsign_decode=x[i].getElementsByTagName("dsign")[0]
+            .childNodes[0].nodeValue ;
+        	var value=dsign_decode;
+        	compare=new String (x[i].getElementsByTagName("pid")[0]
+            .childNodes[0].nodeValue+":"+x[i].getElementsByTagName("did")[0]
+            .childNodes[0].nodeValue );
+            
+           
+        	var decodedString = atob(dsign_decode);
+        	 if(compare == decodedString)
+         	{
+         	comparedresult="true";
+         	}
+         else
+         	{
+         	comparedresult="false";
+         	}
+            table += `<tr><td>` +
+                x[i].getElementsByTagName("pNo")[0]
+                .childNodes[0].nodeValue + `</td><td>` +
+                x[i].getElementsByTagName("did")[0]
+                .childNodes[0].nodeValue + `</td><td>` +
+                x[i].getElementsByTagName("pid")[0]
+                .childNodes[0].nodeValue + `</td><td>`+
+                x[i].getElementsByTagName("date")[0]
+                .childNodes[0].nodeValue + `</td><td>`+
+                x[i].getElementsByTagName("dsign")[0]
+                .childNodes[0].nodeValue + `</td><td>`+
+                decodedString+`</td><td>`+
+                comparedresult+`</td></tr>`;
+                
+        }
+       document.getElementById("div1").innerHTML = table;
+	}
+
+</script>
+</head>
+
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</header>
+<div id="div1"align="center">
+this is div
+</div>
+
+</body>
+</html> 
