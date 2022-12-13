@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Share Report</title>
+
+	<script>
+	if(sessionStorage.getItem('username')==null){
+		location.href="login.html"
+	};
+	var token = sessionStorage.getItem('accessToken');
+	var role=sessionStorage.getItem('role');
+	$(document).ready(function(){
+		  $("button").click(function(){
+			  var no=document.getElementById("no").value;
+			  $.ajax({ 
+			    	type: "GET",
+				        url:'https://localhost:8243/dataservice/1.0.0/share?ReportUNo='+no,
+				        headers:{         
+				            'Authorization' : 'Bearer '+token,
+				            'accept' :'*/*',
+				        },
+			    	
+			    	success: function(result, status, xhr){
+			    		  $.ajax({ 
+			  		    	type: "GET",
+			  			        url:'https://localhost:8243/dataservice/1.0.0/ViewEmail?No='+no,
+			  			        headers:{         
+			  			            'Authorization' : 'Bearer '+token,
+			  			            'accept' :'*/*',
+			  			        },
+			  		    	
+			  		    	success: function(result, status, xhr){
+			  		    		GetEmails(result);
+			  		    },
+			  			        error: function(error){
+			  			  	      $("#div1").html("An error occured while retriving the data. Please enter the details again and try. ");
+			  			        }
+			  			});
+			    },
+				        error: function(error){
+				  	      $("#div1").html("An error occured while retriving the data. Please enter the details again and try. ");
+				        }
+				});
+		  
+		  });
+		});
+	function GetEmails(xml) {
+        var i;
+        var doctor;
+        var patient;
+        var x = xml.getElementsByTagName("Entry");
+
+        // Start to fetch the data by using TagName 
+        for (i = 0; i < x.length; i++) {
+            doctor=x[i].getElementsByTagName("did")[0]
+                .childNodes[0].nodeValue ;
+            patient= x[i].getElementsByTagName("patientid")[0]
+                .childNodes[0].nodeValue;
+                
+        }
+        $.ajax({ 
+	    	type: "POST",
+		        url: 'https://localhost:8243/email/1.0.0/emailSample/send?doctor='+doctor+'&patient='+patient,
+		        headers:{         
+		            'Authorization' : 'Bearer '+token,
+		            'accept' :'*/*'
+		        },
+	    	
+	    	success: function(result, status, xhr){
+	    		$("#div1").html("A message to doctor and patient sent successfully");
+	    },
+		        error: function(error){
+		  	      $("#div1").html("An error occured while sending the data. Please enter the details again and try. ");
+		        }
+		});
+	}
+
+		
+</script>
+</head>
+<body>
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, scientist&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<p>
+<div id="div1" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share Report</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Report No" name="no" id="no">
+  </div>
+  <button class="btn" style="background-color: #2d2c66;"><strong>Share Report<strong></button>
+</div>
+</body>
+</html>

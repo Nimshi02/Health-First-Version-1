@@ -83,10 +83,11 @@ $(document).ready(function(){
 			var availability=document.getElementById("availability").value;//This will get the doctors ID which was entered by the user
 			var location=document.getElementById("location").value;//This will get the medicine code enterd by doctor
 			var Pname=document.getElementById("Pname").value;
+			alert(Pname);
 			var token = sessionStorage.getItem('accessToken');
 	    $.ajax({ /* This will get invoke the api and return the results */
 	    	type: "GET",
-		        url: 'https://localhost:8243/dataservice/1.0.0/AddPharmacist?PID='+pharmacistID+'&Availability='+availability+'&Location='+location+'&Pname'+Pname,
+		        url: 'https://localhost:8243/dataservice/1.0.0/AddPharmacist?PID='+pharmacistID+'&Availability='+availability+'&Location='+location+'&Pname='+Pname,
 		        headers:{         
 		        	'accept' :'*/*',
 		            'Authorization' : 'Bearer '+token,

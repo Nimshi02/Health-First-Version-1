@@ -94,6 +94,7 @@ table.center {
 	            .childNodes[0].nodeValue + `</td><td>` +
 	            x[i].getElementsByTagName("note")[0]
 	            .childNodes[0].nodeValue + `</td><td>`+
+
 	            x[i].getElementsByTagName("totalprice")[0]
 	            .childNodes[0].nodeValue + `</td><td>`+
 	            x[i].getElementsByTagName("date")[0]
@@ -103,7 +104,7 @@ table.center {
 	            
 	    }
 	    table+= `</tbody></table><p><a href="MakePrescriptionPayment.html"><button class="btn" style="background-color: #2d2c66;">
-			<strong>view prescription<strong>
+			<strong>Make Payment<strong>
 		</button></a>`;
 	    document.getElementById("div1").innerHTML =table;
 	}
@@ -112,14 +113,14 @@ table.center {
 <body>
 	<header style="text-align: right; color: #FFFFFF;">
 		<i class="fa fa-user-circle-o" style="font-size: 24px; color: white;"></i>&nbsp;Welcome,
-		Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;
+		Patient&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;
 	</header>
 	<p>
 	<p>
 	<div id="div1" style="max-width: 500px; margin: auto">
 		<p>
-		<h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View
-			User</h1>
+		<h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Make
+			Payment</h1>
 		<div class="input-container">
 			<i class="fa fa-user icon"></i> <input class="input-field"
 				type="text" placeholder="Patient ID" name="pid" id="pid">

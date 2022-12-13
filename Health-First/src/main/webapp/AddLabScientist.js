@@ -9,7 +9,7 @@ $(document).ready(function(){
 			
 	    $.ajax({ /* This will get invoke the api and return the results */
 	    	type: "GET",
-		        url: 'https://localhost:8243/dataservice/1.0.0/GetLabReportType',
+		        url: 'https://localhost:8243/dataservice/1.0.0/AddLabScientist?labScid='+LabScId+'&labSCname='+name,
 		        headers:{         
 		        	'accept' :'*/*',
 		            'Authorization' : 'Bearer '+token,

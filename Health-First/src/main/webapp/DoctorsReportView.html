@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Pharmacist Availability page</title>
+<title>Doctor page</title>
 <script src="jquery.min.js"></script>
 <link href="adminstylecss.css" rel="stylesheet">
 <link rel="stylesheet" href="font-awesome.min.css">
@@ -45,17 +45,21 @@ var role=sessionStorage.getItem('role');
 			 
 
 			
-			  var Pname=document.getElementById("Pname").value;
+			  var did=document.getElementById("did").value;
+			  var patientid=document.getElementById("PatientID").value;
 		    $.ajax({ 
 		    	type: "GET",
-			        url: 'https://localhost:8243/dataservice/1.0.0/GetPharmacistAvailability?Pname='+Pname,
+			        url: 'https://localhost:8243/dataservice/1.0.0/DoctorsReportView?patientID='+patientid+'&did='+did,
 			        headers:{         
 			            'Authorization' : 'Bearer '+token,
 			            'accept' :'*/*',
 			            },
 		    	
 		    	success: function(result, status, xhr){  
-                    PharmacistDetails(result);    		
+                    DoctorDetails(result);
+                    
+		    	
+		    		
 		    },
 			        error: function(error){
 			  	      $("#div1").html("An error occured while viewing the patinent details. Please try again.");
@@ -64,23 +68,26 @@ var role=sessionStorage.getItem('role');
 		  });
 		});
 	
-	function PharmacistDetails(xml) {
+	function DoctorDetails(xml) {
         var i;
         var table =
-            `<table><tbody><tr><th>Pharmacist</th>
-                <th>Availability</th>
-                <th>Location</th>
+            `<table><tbody><tr><th>Report No</th>
+            <th>Doctor ID</th>
+                <th>Patient ID</th>
+                <th>Date</th>
             </tr>`;
         var x = xml.getElementsByTagName("Entry");
 
         // Start to fetch the data by using TagName 
         for (i = 0; i < x.length; i++) {
             table += `<tr><td>` +
-                x[i].getElementsByTagName("Pname")[0]
+                x[i].getElementsByTagName("reportNo")[0]
                 .childNodes[0].nodeValue + `</td><td>` +
-                x[i].getElementsByTagName("availability")[0]
+                x[i].getElementsByTagName("did")[0]
                 .childNodes[0].nodeValue + `</td><td>` +
-                x[i].getElementsByTagName("location")[0]
+                x[i].getElementsByTagName("patientid")[0]
+                .childNodes[0].nodeValue + `</td><td>` +
+                x[i].getElementsByTagName("date")[0]
                 .childNodes[0].nodeValue + `</td></tr>`;
                 
         }
@@ -94,10 +101,13 @@ var role=sessionStorage.getItem('role');
 	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</header>
 <div id="div1"align="center">
 
-    <input class="input-field" type="text" placeholder="Pharmacist Name" name="Pname"id="Pname">
-<br>
+    <input class="input-field" type="text" placeholder="Doctor ID" name="did"id="did">
+<br><br>
+
+    <input class="input-field" type="text" placeholder="Patient ID" name="PatientID" id="PatientID">
  <br>
-  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>View Availability<strong></button>
+ <br>
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>View Report<strong></button>
 </div>
 
 </body>
