@@ -79,7 +79,6 @@
 		    			        	  
 		    			        	  accessToken = result["access_token"];
 		    			        	  sessionStorage.setItem('role',role);
-		    			        	  alert(role);
 		    			        	  sessionStorage.setItem('accessToken',accessToken);
 		    				    		$("#div2").html(accessToken);
 		    				    		if(accessToken!=null)/* This will check whether the access token is generated or not */
