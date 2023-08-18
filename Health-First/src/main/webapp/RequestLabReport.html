@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<title>Request Lab Report</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+header{
+    height: 50px;
+	padding-top: 10px;
+    background-color: gray;
+    text-align: right;
+}
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: gray;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: gray;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+
+.options {
+  border: 1px solid #e5e5e5;
+  padding: 10px;
+}
+
+select {
+  font-size: 14px;
+  width: 447px;
+  height:36px;
+  background: white;
+}
+</style>
+<script>
+if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};
+$(document).ready(function(){
+	
+	var token = sessionStorage.getItem('accessToken');
+   $.ajax({ /* This AJAX function is to send the user details to the IS and get the id token */
+   	type: "GET",
+	        url: 'https://localhost:8243/dataservice/1.0.0/GetLabReportType',
+	        headers:{         
+	        	'accept' :'*/*',
+	            'Authorization' : 'Bearer '+token,
+	            },
+	          
+	          
+	          success: function(result, status, xhr){
+	        	  Select(result);
+	    		  
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while creating a token to the user");
+			        }
+   	
+	      
+	});
+	  });
+function Select(xml) {
+    var i;
+    var option =
+        `<i class="	fa fa-id-card icon"></i><select id="selectType">`;
+    var x = xml.getElementsByTagName("Entry");
+
+    // Start to fetch the data by using TagName 
+    for (i = 0; i < x.length; i++) {
+    	option +=  `<option value='`+x[i].getElementsByTagName("reportUNo")[0]
+            .childNodes[0].nodeValue + `'>` +
+            x[i].getElementsByTagName("reportName")[0]
+            .childNodes[0].nodeValue + `</option>` ;
+            
+            
+            
+    }
+    document.getElementById("div2").innerHTML = option;
+}
+$(document).ready(function(){
+	var token = sessionStorage.getItem('accessToken');
+	  $("button").click(function(){
+		  var DID=document.getElementById("DID").value;
+		  var PID=document.getElementById("PID").value;
+		  var selectType=document.getElementById("selectType").value;
+		  var Date=document.getElementById("Date").value;
+	    $.ajax({ 
+	    	type: "GET",
+	    	
+		        url: 'https://localhost:8243/dataservice/1.0.0/RequestReport?reportUNO='+selectType+'&did='+DID+'&patientid='+PID+'&date='+Date,
+		        headers:{         
+		        	'accept' :'*/*',
+		            'Authorization' : 'Bearer '+token,       
+		        },
+	    	
+	    	success: function(result, status, xhr){
+	    		$("#div1").html("Request added successfully");
+	    },
+		        error: function(error){
+		  	      $("#div1").html("Error occured while viewing the patient. Please try again later. ");
+		        }
+		});
+	  });
+	});
+</script>
+<body>
+
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Doctor&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Request Lab Report</h1>
+  <div class="input-container">
+    <i class="	fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Doctor ID" name="DID" id="DID">
+</div></p>
+ <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Patient ID" name="PID" id="PID">
+  </div>
+ <div class="input-container">
+   <div id="div2"></div2></div></div>
+<p></p>
+    <div class="input-container">
+    <i class="	fa fa-map-marker icon"></i>
+    <input class="input-field" type="text" placeholder="Date" name="Date" id="Date">
+</div></p>
+<p>
+   
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Request Report<strong></button>
+</div>
+</body>
+</html>

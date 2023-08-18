@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+table, th, td {
+
+  border: 1px solid black;
+  
+}
+table{
+align-self:center;
+width:100%
+}
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}.border {
+  border: none;
+  margin-top: 560px;
+}
+
+.mr-0 {
+  margin-right: auto;
+}
+.ml-auto {
+  margin-left:690px;
+}
+.d-block {
+  display:block;
+}
+.ml-up
+{
+	margin-top: auto;
+}</style>
+<script>
+var DID;
+var PID;
+var Day;
+var token = sessionStorage.getItem('accessToken');
+$(document).ready(function(){
+	var url_string = window.location.href; 
+	var url = new URL(url_string);
+	 DID=url.searchParams.get("DID");
+	PID=url.searchParams.get("PID");
+	Day=url.searchParams.get("Day");
+	alert(Day);
+	var docid=null;
+	var doccharges=null;
+   $.ajax({ /* This AJAX function is to send the user details to the IS and get the id token */
+   	type: "GET",
+	        url: 'https://localhost:8243/dataservice/1.0.0/ViewAppointment?PID='+PID+'&DID='+DID+'&Date='+Day,
+	        headers:{         
+	        	'accept' :'*/*',
+	            'Authorization' : 'Bearer '+token,
+	            },
+	          
+	          
+	          success: function(result, status, xhr){
+	        	  DoctorDetails(result);
+	    		  
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while creating a token to the user");
+			        }
+   	
+	      
+	});
+	  });
+function DoctorDetails(xml) {
+    var i;
+    var table =
+        `<table><tbody><tr><th>DoctorID</th>
+            <th>Patient ID</th>
+            <th>Venue</th>
+            <th>payment</th>
+        </tr>`;
+    var x = xml.getElementsByTagName("Entry");
+
+    // Start to fetch the data by using TagName 
+  for (i = 0; i < x.length; i++) {
+        table += `<tr><td>` +
+            x[i].getElementsByTagName("did")[0]
+            .childNodes[0].nodeValue + `</td><td>` +
+            x[i].getElementsByTagName("pid")[0]
+            .childNodes[0].nodeValue + `</td><td>` +
+            x[i].getElementsByTagName("venue")[0]
+            .childNodes[0].nodeValue + `</td><td>`+
+            x[i].getElementsByTagName("payment")[0]
+            .childNodes[0].nodeValue + `</td></tr>`;
+            
+    }
+    document.getElementById("div2").innerHTML = table;
+}
+$(document).ready(function(){
+	  $("button").click(function(){
+	    $.ajax({ 
+	    	type: "GET",
+		        url: 'https://localhost:8243/dataservice/1.0.0/UpdatePayment?PID='+PID+'&DID='+DID+'&Date='+Day,
+		        headers:{         
+		            'Authorization' : 'Bearer '+token
+		        },
+		       
+	    	
+	    	success: function(result, status, xhr){
+	    		var print="<h1>Payment has been setteled successfully</h1>";
+	    		$("#div1").html(print);
+	    },
+		        error: function(error){
+		  	      $("#div1").html("An error occured while deleting medical records. Please try again.");
+		        }
+		});
+	  });
+	});
+</script>
+</head>
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</header>
+<p>&nbsp;</p>
+<div id="div1"  style="max-width:500px;margin:auto">
+<p>&nbsp;</p>
+
+<div id="div2"></div><p>&nbsp;</p>
+    <input class="input-field" type="text" placeholder="Card No" name="cno"id="cno">
+<br><br>
+
+    <input class="input-field" type="text" placeholder="Card Holders name" name="cname" id="cname">
+ <br>
+ <br>
+ 
+
+ <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Make Payment<strong></button>
+ </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Admin page</title>
+<link href="adminstylecss.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+</style>
+<script>
+var url_string = window.location.href; 
+function ViewDAvailability() {
+	  location.href="ViewDoctorAvailability.html";
+	}
+function ViewPAvailability() {
+	  location.href="ViewPAvailability.html";
+	}
+
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js"></script>
+</head>
+<script>
+$(document).ready(function(){
+	var idToken="";
+	  var accessToken="";
+	 var details = {
+			 'grant_type':'password',
+			    'username': 'publicuser',
+			    'password': 'publicuser',
+			    'scope': 'openid'}
+	  var formBody = [];
+	  for (var property in details) {
+	    var encodedKey = encodeURIComponent(property);
+	    var encodedValue = encodeURIComponent(details[property]);
+	    formBody.push(encodedKey + "=" + encodedValue);
+	  }
+	  formBody = formBody.join("&");
+	 
+   $.ajax({ /* This AJAX function is to send the user details to the IS and get the id token */
+   	type: "POST",
+	        url: 'https://localhost:9444/oauth2/token',
+	        contentType: "application/x-www-form-urlencoded",
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(unescape(encodeURIComponent('AeanWPGVNnwZ1htfDIiMKD1oqFYa' + ':' + '6tJ3FuaEtB3GfzCOXDMNI6ffqTca'))))
+	          },
+	          headers: {
+	        		
+		            'Content-Type': 'application/x-www-form-urlencoded',
+		            'Access-Control-Allow-Origin': '*'
+		          },
+	          data: formBody,
+	          
+	          
+	          success: function(result, status, xhr){
+	        	  idToken = result["id_token"];
+	        	  var data = {
+	    				  'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
+	    				   'assertion': idToken,
+	    				   }
+	    		  var Body = [];
+	    		  for (var property in data) {
+	    		    var encodedKey = encodeURIComponent(property);
+	    		    var encodedValue = encodeURIComponent(data[property]);
+	    		    Body.push(encodedKey + "=" + encodedValue);
+	    		  }
+	    		  
+	    		  Body = Body.join("&");
+	    		    $.ajax({ /*  This function is to send the id token to APIM and generate access token*/
+	    		    	type: "POST",
+	    			        url: 'https://localhost:8243/token',
+	    			        beforeSend: function(xhr) {
+	    			            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(unescape(encodeURIComponent('WucOGQ6y1mR4uvOw5SwjBskoUJka' + ':' + 'p7WAE4oaxtfcS4kXsc7IlsXtfp4a'))))
+	    			          },
+	    			        headers: {
+	    			            'Content-Type': 'application/x-www-form-urlencoded',
+	    			          },
+	    			          data: Body,
+	    			          
+	    			          
+	    			          success: function(result, status, xhr){
+	    			        	  accessToken = result["access_token"];
+	    			        	  sessionStorage.setItem('accessToken',accessToken);
+	    			        	  
+	    				    			},
+	    				   
+	    					        error: function(error){
+	    					  	      $("#div2").html("An error occured ");
+	    					        }
+	    			      
+	    			});
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while creating a token to the user");
+			        }
+   	
+	      
+	});
+	  });
+</script>
+<body>
+<div id="div1"> </div>
+</body>
+</html>
+</head>
+
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, public user&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<div align="center"><button onclick="ViewDAvailability()">View Doctor</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="ViewPAvailability()">View pharmacist</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div>
+</body>
+</html> 

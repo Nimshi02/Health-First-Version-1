@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<title>Add Doctor</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="AddDoctor.js"></script>
+<link rel="stylesheet" href="AddDoctorFileStyle.css">
+</head>
+<body>
+
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Doctor</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Doctor ID" name="DID" id="DID">
+  </div>
+ <div class="input-container">
+    <i class="fa fa-tag icon"></i>
+    <input class="input-field" type="text" placeholder="Doctor Name" name="Dname" id="Dname">
+  </div>
+ <div class="input-container">
+    <i class="	fa fa-address-card icon"></i>
+    <input class="input-field" type="text" placeholder="Availability" name="availability" id="availability">
+</div><p>
+    <div class="input-container">
+    <i class="	fa fa-map-marker icon"></i>
+    <input class="input-field" type="text" placeholder="Location" name="location" id="location">
+</div>
+<div class="input-container">
+    <i class="fa fa-user-md icon"></i>
+    <input class="input-field" type="text" placeholder="Speciality" name="speciality" id="speciality">
+  </div>
+  <div class="input-container">
+    <i class="fa fa-user-md icon"></i>
+    <input class="input-field" type="text" placeholder="Charges" name="dcharges" id="dcharges">
+  </div>
+</p>
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Add Doctor<strong></button>
+</div>
+</body>
+</html>

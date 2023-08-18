@@ -92,11 +92,18 @@
 		    				    				{
 		    				    				location.href = "Doctor.html";
 		    				    				}
+		    				    				if(role=="MLS")
+	    				    				{
+	    				    				location.href = "MLS.html";
+	    				    				}
 		    				    			if(role=="patient")
 	    				    				{
 	    				    				location.href = "Patient.html";
 	    				    				}
-		    				    			
+		    				    			if(role=="Pharmacist")	
+		    				    			{
+												location.href="Pharmacist.html";
+		}
 		    				    			}
 		    				    			}
 		    				    },

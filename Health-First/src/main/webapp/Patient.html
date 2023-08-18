@@ -2,86 +2,44 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Patient page</title>
-<script src="jquery.min.js"></script>
+<title>Admin page</title>
 <link href="adminstylecss.css" rel="stylesheet">
 <link rel="stylesheet" href="font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
-.input-field {
-  width: 250px;
-  padding: 10px;
-  outline: none;
-}
-
-.input-field:focus {
-  border: 2px solid dodgerblue;
-}
 a {
   color: white;
   text-decoration: none; /* no underline */
 }
 </style>
-
 <script>
 if(sessionStorage.getItem('username')==null){
 	location.href="login.html"
 };
 var url_string = window.location.href; 
-var url = new URL(url_string);
-var user = "";
 var token = sessionStorage.getItem('accessToken');
-var role=sessionStorage.getItem('role');
-	$(document).ready(function(){
-		  $("button").click(function(){
-			 
+function ViewPatient() {
+	  location.href="ViewPatientDetails.html";
+	}
+function ViewAvailability() {
+	  location.href="ViewDoctorAvailability.html";
+	}
+function MakeAppointment() {
+	  location.href="MakeAppointment1.html";
+	}
+function PayForPrescription() {
+	  location.href="PayForPrescription.html";
+	}
+function ViewResults() {
+	  location.href="CheckLabReportResult.html";
+	}
 
-			
-			  user=document.getElementById("usrid").value;
-		    $.ajax({ 
-		    	type: "GET",
-		    	 contentType: " charset=UTF-8 ",
-			        dataType: 'json',
-			        url: 'https://localhost:8243/ehealth/1.1.0/view/'+role +'/'+user,
-			        headers:{         
-			            'Authorization' : 'Bearer '+token,
-			            'Access-Control-Allow-Origin': '*'
-			            },
-		    	
-		    	success: function(result, status, xhr){
-		    		if(result["id"]!=null){
-		    		var table = $("<table><tr><th colspan='2'>Patient Descrption</th></tr>");
-		    		  
-                    table.append("<tr><td>ID:</td><td>" + result["id"] + "</td></tr>");
-                    table.append("<tr><td>Name:</td><td>" + result["name"]+ "</td></tr>");
-                    table.append("<tr><td>Email:</td><td>" + result["email"]+ "</td></tr>");
-                    table.append("<tr><td>Date Of Birth:</td><td>" + result["dateOfBirth"]+ "</td></tr>");
-                    var jsonStr = JSON.stringify(result["MedicalRecords"]);
-                    table.append("<tr><td>Medical records:</td><td>" + jsonStr+ "</td></tr>");
-                    $("#div1").html(table);
-		    	}
-			            else
-			            	{
-			            	 $("#div1").html(result["message"]);
-			            	}
-		    		
-		    },
-			        error: function(error){
-			  	      $("#div1").html("An error occured while viewing the patinent details. Please try again.");
-			        }
-			});
-		  });
-		});
-	
 </script>
 </head>
 
 <body style="text-align: center" >
 	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Patient&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
-<div id="div1"align="center">
-    <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" placeholder="UserID" name="usrnid" id="usrid"><br><br>
-  <button>View patient</button></a><p/></div>
+<div align="center"><button onclick="ViewPatient()">View Detials</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="ViewAvailability()">View Doctors Availability</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="MakeAppointment()">Add Appointment</button><p><button onclick="PayForPrescription()">Make payment for prescription</button><p/></p><button onclick="ViewResults()">View Results</button></div>
 </body>
 </html> 

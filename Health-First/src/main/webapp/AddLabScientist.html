@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<title>Add Pharmacist</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="AddDoctorFileStyle.css">
+<script src="AddLabScientist.js"></script>
+<body>
+
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Lab Scientist</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Scientist ID" name="labScId" id="labScId">
+  </div>
+
+  <div class="input-container">
+    <i class="fa fa-user-md icon"></i>
+        <input class="input-field" type="text" placeholder="Scientist Name" name="name" id="name">
+    <div id="div2"></div>
+  </div>
+  </p>
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Add LabScientist<strong></button>
+</div>
+</body>
+</html>

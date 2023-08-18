@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Deliver Medicine</title>
+
+	<script>
+	if(sessionStorage.getItem('username')==null){
+		location.href="login.html"
+	};
+	var token = sessionStorage.getItem('accessToken');
+	$(document).ready(function(){
+		  $("button").click(function(){
+			  var pno=document.getElementById("pno").value;
+		    $.ajax({ 
+		    	type: "GET",
+			        url: 'https://localhost:8243/dataservice/1.0.0/DeliverPrescription?pNo='+pno,
+			        headers:{         
+			            'Authorization' : 'Bearer '+token
+			        },
+		    	
+		    	success: function(result, status, xhr){
+		    		$("#div1").html("Prescrption has been delivered successfully");
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while retriving the data. Please enter the details again and try.");
+			        }
+			});
+		  });
+		});
+		
+</script>
+</head>
+<body>
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Pharmacist&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<p>
+<div id="div1" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delevier medicine</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Prescription Number" name="pno" id="pno">
+  </div>
+  <button class="btn" style="background-color: #2d2c66;"><strong>Deilver medicine<strong></button>
+</div>
+</body>
+</html>

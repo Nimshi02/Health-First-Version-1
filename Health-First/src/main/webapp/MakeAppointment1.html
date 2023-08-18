@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Patient page</title>
+<script src="jquery.min.js"></script>
+<link href="adminstylecss.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.input-field {
+  width: 250px;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+table, th, td {
+
+  border: 1px solid black;
+  
+}
+table{
+width:100%
+}
+</style>
+
+<script>
+/*if(sessionStorage.getItem('username')==null){
+	location.href="login.html"
+};*/
+
+
+function AddAppointment(){
+	var dname=document.getElementById("dname").value;
+	var speciality=document.getElementById("Speciality").value;
+	alert(dname);
+	location.href="MakeAppointment2.html?dname="+dname+"&speciality="+speciality;
+}
+
+</script>
+</head>
+
+<body style="text-align: center" >
+	<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</header>
+<div id="div1"align="center">
+
+    <input class="input-field" type="text" placeholder="Doctor Name" name="dname"id="dname">
+<br><br>
+
+    <input class="input-field" type="text" placeholder="Speciality" name="Speciality" id="Speciality">
+ <br>
+ <br>
+  <button type="submit" class="btn" style="background-color: #2d2c66;" onclick="AddAppointment()"><strong>Add appointment<strong></button>
+</div>
+
+</body>
+</html> 

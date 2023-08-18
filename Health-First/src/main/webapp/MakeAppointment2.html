@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="AddPatientStyle.css">
+<link rel="stylesheet" href="font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script>
+$(document).ready(function(){
+	var url_string = window.location.href; 
+	var url = new URL(url_string);
+	var dname = url.searchParams.get("dname");
+	alert(dname);
+	var speciality=url.searchParams.get("speciality");
+	var pid=document.getElementById("PID").vlaue;
+	var date=document.getElementById("Date").value;
+	var token = sessionStorage.getItem('accessToken');
+	var docid=null;
+	var doccharges=null;
+   $.ajax({ /* This AJAX function is to send the user details to the IS and get the id token */
+   	type: "GET",
+	        url: 'https://localhost:8243/dataservice/1.0.0/GetDoctorDetails?dname='+dname+'&speciality='+speciality,
+	        headers:{         
+	        	'accept' :'*/*',
+	            'Authorization' : 'Bearer '+token,
+	            },
+	          
+	          
+	          success: function(result, status, xhr){
+	        	  Select(result);
+	        	  
+	    		  
+		    },
+			        error: function(error){
+			  	      $("#div1").html("An error occured while creating a token to the user");
+			        }
+   	
+	      
+	});
+	  });
+function Select(xml) {
+    var i;
+    var option =
+        `<i class="	fa fa-id-card icon"></i><select id="selectType">`;
+    var x = xml.getElementsByTagName("Entry");
+
+    // Start to fetch the data by using TagName 
+    for (i = 0; i < x.length; i++) {
+    	option +=  `<option value='`+x[i].getElementsByTagName("charges")[0].childNodes[0].nodeValue +`,`
+    	+x[i].getElementsByTagName("DID")[0].childNodes[0].nodeValue +`,`
+    	+x[i].getElementsByTagName("dcharges")[0].childNodes[0].nodeValue + `,`+ x[i].getElementsByTagName("location")[0]
+        .childNodes[0].nodeValue +`'>` +
+            x[i].getElementsByTagName("location")[0]
+            .childNodes[0].nodeValue + `</option>` ;
+            
+            
+            
+    }
+    document.getElementById("div2").innerHTML = option;
+}
+$(document).ready(function(){
+	var token = sessionStorage.getItem('accessToken');
+	  $("button").click(function(){
+		  var DID;
+		  var PID=document.getElementById("PID").value;
+		  var selectType=document.getElementById("selectType").value;
+		  var arr=selectType.split(',');
+		  alert(arr);
+		  DID=arr[1];
+		  const val1=parseInt(arr[0]);
+		  const val2=parseInt(arr[2]);
+		  var charges=val1+val2;
+		  var venue=arr[3];
+		  alert(venue);
+		  alert(charges);
+		  var Date=document.getElementById("Date").value;
+	    $.ajax({ 
+	    	type: "GET",
+	    	
+		        url: 'https://localhost:8243/dataservice/1.0.0/AddAppointment?DID='+DID+'&PID='+PID+'&venue='+venue+'&payment='+charges+'&madepayment=no&confirmation=no&date='+Date,
+
+		        headers:{         
+		        	'accept' :'*/*',
+		            'Authorization' : 'Bearer '+token,       
+		        },
+	    	
+	    	success: function(result, status, xhr){
+	    		location.href="confirmAppointment.html?DID="+DID+"&PID="+PID+"&Date="+Date;
+	    },
+		        error: function(error){
+		  	      $("#div1").html("Error occured while viewing the patient. Please try again later. ");
+		        }
+		});
+	  });
+	});
+
+
+</script>
+</head>
+<body>
+
+<header style="text-align: right; color: #FFFFFF;"><i class="fa fa-user-circle-o" style="font-size:24px;color: white;"></i>&nbsp;Welcome, Admin&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout.html">Logout</a>&nbsp;&nbsp;</header>
+<p>
+<div id="div1" action="/firstservelet/AddPatient.jsp" style="max-width:500px;margin:auto">
+<p>
+  <h1 style="color: #2d2c66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Appointment</h1>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Patient ID" name="PID" id="PID">
+  </div>
+  <div class="input-container">
+    <div id="div2"></div>
+  </div>
+    <div class="input-container">
+    <i class="	fa fa-calendar icon"></i>
+    <input class="input-field" type="text" placeholder="Date" name="Date" id="Date">
+  </div>
+  
+
+  <button type="submit" class="btn" style="background-color: #2d2c66;"><strong>Make Appointment<strong></button>
+</div>
+</body>
+</html>
